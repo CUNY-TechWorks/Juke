@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Sidebar, AllAlbums, Footer, Album } from './components/';
 import Axios from 'axios';
 
+// make our audio element global, so it can be used throughout (on all methods!)
+const audio = document.createElement('audio');
+
 export default class Main extends Component {
   constructor() {
      super();
@@ -9,6 +12,7 @@ export default class Main extends Component {
      // we have to bind since these methods aren't arrow functions
      this.changeToAlbumView = this.changeToAlbumView.bind(this);
      this.resetView = this.resetView.bind(this);
+     this.playAudio = this.playAudio.bind(this);
 
      this.state = {
         albums: [],
@@ -45,6 +49,12 @@ resetView() {
    })
 }
 
+playAudio(url) {
+   audio.src = url;
+   audio.load();
+   audio.play();
+}
+
 async componentDidMount() {
      try {
         // AJAX request
@@ -73,8 +83,8 @@ async componentDidMount() {
         return (
          <div id='main' className='row container'>
           <Sidebar resetView={this.resetView}/>
-          { Object.keys(selectedAlbum).length === 0 ? <AllAlbums array={albums} changeToAlbumView={this.changeToAlbumView}/> : <Album album={selectedAlbum}/>}
-          <Footer />
+          { Object.keys(selectedAlbum).length === 0 ? <AllAlbums array={albums} changeToAlbumView={this.changeToAlbumView}/> : <Album album={selectedAlbum} playAudio={this.playAudio}/>}
+          <Footer/>
          </div>
         );
     }

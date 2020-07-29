@@ -2,7 +2,7 @@ import React from 'react';
 import Songs from './Songs';
 
 export default function Album(props) {
-    const { album } = props;
+    const { album, playAudio } = props;
 
     return (
       <div className='container'>
@@ -15,7 +15,7 @@ export default function Album(props) {
               <small> {album.artist.name} </small>
             </a>
           </div>
-          <Songs artistName={album.artist.name} songs={album.songs}/>
+          <Songs artistName={album.artist.name} songs={album.songs} play={playAudio}/>
         </div>
 
       </div>
