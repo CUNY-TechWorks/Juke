@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function Songs(props) {
-    const { artistName, songs, play } = props;
+    const { artistName, songs, play, pause, showFeedback, currentSong } = props;
 
     return (
       <table id='songs'>
@@ -15,8 +15,8 @@ export default function Songs(props) {
           </tr>
           {songs.map(el => {
              return (
-              <tr>
-                <td> <i className='fa fa-play-circle' onClick={() => play(el.audioUrl)}/></td>
+              <tr className={el.id === currentSong ? "pressed" : ''}>
+                <td> <i className={el.id === currentSong ? 'fa fa-pause-circle' : 'fa fa-play-circle'} onClick={el.id === currentSong ? () => pause() : () => { play(el.audioUrl); showFeedback(el.id); }}/> </td>
                 <td> {el.id} </td>
                 <td> {el.name} </td>
                 <td> {artistName} </td>

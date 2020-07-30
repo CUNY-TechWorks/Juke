@@ -9,15 +9,18 @@ export default class Main extends Component {
   constructor() {
      super();
      
-     // we have to bind since these methods aren't arrow functions
+     // we have to bind since these methods since they aren't arrow functions
      this.changeToAlbumView = this.changeToAlbumView.bind(this);
      this.resetView = this.resetView.bind(this);
      this.playAudio = this.playAudio.bind(this);
+     this.pauseAudio = this.pauseAudio.bind(this);
+     this.showSongFeedback = this.showSongFeedback.bind(this);
 
      this.state = {
         albums: [],
         isLoading: true,
         selectedAlbum: {},
+        selectedSong: null,
      };
   }
 
@@ -39,20 +42,30 @@ changeToAlbumView(albumId) {
          })
       })
       .catch(err => {
-         console.error(err.stack)
+         console.error(err.stack);
       });
 }
 
 resetView() {
    this.setState({
       selectedAlbum: {},
-   })
+      selectedSong: {},
+   });
 }
 
 playAudio(url) {
    audio.src = url;
    audio.load();
    audio.play();
+}
+pauseAudio() {
+   audio.pause();
+}
+
+showSongFeedback(currentSongId) {
+    this.setState({
+       selectedSong: currentSongId,
+    });
 }
 
 async componentDidMount() {
@@ -72,7 +85,7 @@ async componentDidMount() {
   }
 
   render() {
-     const { albums, isLoading, selectedAlbum } = this.state;
+     const { albums, isLoading, selectedAlbum, selectedSong } = this.state;
 
      if(isLoading) {
        return (
@@ -83,8 +96,8 @@ async componentDidMount() {
         return (
          <div id='main' className='row container'>
           <Sidebar resetView={this.resetView}/>
-          { Object.keys(selectedAlbum).length === 0 ? <AllAlbums array={albums} changeToAlbumView={this.changeToAlbumView}/> : <Album album={selectedAlbum} playAudio={this.playAudio}/>}
-          <Footer/>
+          { Object.keys(selectedAlbum).length === 0 ? <AllAlbums array={albums} changeToAlbumView={this.changeToAlbumView}/> : <Album album={selectedAlbum} playAudio={this.playAudio} pauseAudio={this.pauseAudio} showSongFeedback={this.showSongFeedback} selectedSong={selectedSong}/>}
+          { selectedSong === null ? '' : <Footer/>}
          </div>
         );
     }

@@ -39,7 +39,7 @@ table tr:hover {
   background-color: #333;
 }
 
-table tr.active {
+table tr.pressed {
   background-color: #333;
 }
 
