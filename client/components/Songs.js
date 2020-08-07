@@ -16,7 +16,7 @@ export default function Songs(props) {
           {songs.map(el => {
              return (
               <tr className={el.id === currentSong ? "pressed" : ''}>
-                <td> <i className={el.id === currentSong ? 'fa fa-pause-circle' : 'fa fa-play-circle'} onClick={el.id === currentSong ? () => pause() : () => { play(el.audioUrl); showFeedback(el.id); }}/> </td>
+                <td> <i className={el.id === currentSong ? `fa fa-pause-circle` : 'fa fa-play-circle'} onClick={el.id === currentSong ? () => { pause(); showFeedback(null); } : () => { play(el.audioUrl); showFeedback(el.id); }}/> </td>
                 <td> {el.id} </td>
                 <td> {el.name} </td>
                 <td> {artistName} </td>
