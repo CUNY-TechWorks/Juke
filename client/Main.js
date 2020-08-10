@@ -167,7 +167,6 @@ render() {
      else {
         return (
           <div id='main' className='row container'>
-             hello world
             <Sidebar resetView={this.resetView}/>
             { Object.keys(selectedAlbum).length === 0 ? <AllAlbums array={albums} changeToAlbumView={this.changeToAlbumView}/> : <Album album={selectedAlbum} playAudio={this.playAudio} pauseAudio={this.pauseAudio} showSongFeedback={this.showSongFeedback} selectedSong={selectedSong}/>}
             { selectedSong === null ? '' : <Footer album={selectedAlbum} showSongFeedback={this.showSongFeedback} play={this.playAudio} pause={this.pauseAudio} previous={this.prevAudio} forward={this.nextAudio} />}
